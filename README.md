@@ -7,7 +7,18 @@
 <p>Printf is a C programming library function "int printf(const char *format, ...)" that sends formatted output to stdout (standard output library) to call it into the C program, and using it for simple strings or formatted specifiers that allow us to print different types of data. Here we will be collaborating to creating a printf project that diversify on the its features in order to know what a powerful tool it is.</p>
 
 <h2>Compilation</h2>
-<code> gcc -Wall -Werror -Wextra -pedantic *.c </code><br>
 
-<h2>Printf Prototype</h2>
-<code> int _printf(const char *format, ...) </code>
+The directory contents should be compiled with the following command:
+
+```
+$ gcc -Wall -Werror -Wextra -pedantic *.c
+```
+
+* `_printf()` function may be used, in any C language program.  This is the
+prototype:
+
+```
+_printf(const char *[FORMAT], ...)
+```
+* `./man_printf`: manual file including the manual for how our custom printf
+functions.
