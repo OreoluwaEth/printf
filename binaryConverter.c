@@ -1,36 +1,42 @@
-#include <stdio.h>
-#include <stdlib.h>
-
+#include "main.h"
+#include <stdarg.h>
+#include <stddef.h>
+#include <unistd.h>
 /**
 * binConverter - represents an unsigned int to binary
 * @n: unsigned int to be converted
 * Return: pointer to char
 **/
-char *binConverter(unsigned int n)
+
+
+int _print_bin(va_list args)
 {
-	char *bnum, bNum[1024];
-	int i, j;
+	int n = va_arg(args, int);
+	unsigned int length = 0, power = 1, k, digit, count = 0, number;
 
-	i = 0;
-	while (n != 0)
+	if (n != 0)
 	{
-		bNum[i] = (n % 2) + '0';
-		n /= 2;
-		i++;
+		number = n;
+		while (number != 0)
+		{
+			number /= 2;
+			length++;
+		}
+		for (k = 1; k <= length - 1; k++)
+			power *= 2;
+		for (k = 1; k <= length; k++)
+		{
+			digit = n / power;
+			_putchar(digit + '0');
+			count++;
+			n -= digit * power;
+			power /= 2;
+		}
 	}
-	bNum[i] = '\0';
-
-	bnum = malloc(sizeof(char) * i);
-	if (bnum == NULL)
-		return (NULL);
-
-	i--;
-	j = 0;
-	while (i >= 0)
+	else
 	{
-		bnum[j] = bNum[i];
-		j++, i--;
+		_putchar('0');
+		return (1);
 	}
-	bnum[j] = '\0';
-	return (bnum);
+	return (count);
 }

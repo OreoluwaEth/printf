@@ -20,6 +20,7 @@ typedef struct types
 
 int _putchar(char c);
 int _printf(const char *format, ...);
+int _print_bin(va_list args);
 int printc(va_list l);
 int print_string(va_list s);
 int (*cmp_func(const char a))(va_list);
