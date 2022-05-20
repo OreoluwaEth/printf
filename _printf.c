@@ -1,78 +1,48 @@
 #include "main.h"
 /**
- * _printf - printf function.
- * @format: variable
- *
- * Return: nbytes printed.
+ * _printf - replication of some of the features from C function printf()
+ * @format: character string of directives, flags, modifiers, & specifiers
+ * Description: This function uses the variable arguments functionality and is
+ * supposed to resemble printf().  Please review the README for more
+ * information on how it works.
+ * Return: number of characters printed
  */
 int _printf(const char *format, ...)
 {
-	va_list list;
-	unsigned int i = 0, characters_number = 0;
+	va_list args_list;
+	inventory_t *inv;
+	void (*temp_func)(inventory_t *);
 
 	if (!format)
 		return (-1);
+	va_start(args_list, format);
+	inv = build_inventory(&args_list, format);
 
-	va_start(list, format);
-	for (i = 0; format[i] != '\0'; i++)
+	while (inv && format[inv->i] && !inv->error)
 	{
-		if (format[i] == '%')
+		inv->c0 = format[inv->i];
+		if (inv->c0 != '%')
+			write_buffer(inv);
+		else
 		{
-			if (format[i + 1] == '\0')
-				return (-1);
-
-			else if (format[i + 1] == '%')
+			parse_specifiers(inv);
+			temp_func = match_specifier(inv);
+			if (temp_func)
+				temp_func(inv);
+			else if (inv->c1)
 			{
-				_putchar('%');
-				characters_number++;
-				i++;
-			}
-			else if (cmp_func(format[i + 1]) != NULL)
-			{
-				characters_number += (cmp_func(format[i + 1]))(list);
-				i++;
+				if (inv->flag)
+					inv->flag = 0;
+				write_buffer(inv);
 			}
 			else
 			{
-				_putchar(format[i]);
-				characters_number++;
+				if (inv->space)
+					inv->buffer[--(inv->buf_index)] = '\0';
+				inv->error = 1;
 			}
 		}
-		else
-		{
-			_putchar(format[i]);
-			characters_number++;
-		}
+		inv->i++;
 	}
-	va_end(list);
-	return (characters_number);
-}
-
-/**
- * cmp_func - Entry point
- * @a: character.
- *
- * Return: 0.
- */
-int (*cmp_func(const char a))(va_list)
-{
-	print_f printf[] = {
-		{'c', printc},
-		{'s', print_string},
-		{'d', print_n},
-		{'i', print_n},
-		{'\0', NULL}
-	};
-
-	int k;
-
-	for (k = 0; printf[k].p != '\0'; k++)
-	{
-		if (printf[k].p == a)
-		{
-			return (printf[k].func);
-		}
-	}
-
-	return (0);
+	return (end_func(inv));
 }
