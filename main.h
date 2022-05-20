@@ -24,16 +24,6 @@ int printc(va_list l);
 int print_string(va_list s);
 int (*cmp_func(const char a))(va_list);
 int print_n(va_list n);
-void write_buffer(char buffer[], int *buflen);
-void initialize_buffer(char buffer[]);
 char *binConverter(unsigned int n);
-char *octConverter(unsigned int n);
-char *hexConverter(char type, unsigned int n);
-char *binConverter(unsigned int n);
-int print_o();
-int print_hex();
-int print_heX();
-int print_b();
-int print_S();
 
 #endif 
