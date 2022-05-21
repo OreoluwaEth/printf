@@ -62,9 +62,7 @@ int (*cmp_func(const char a))(va_list)
 		{'d', print_n},
 		{'i', print_n},
 		{'b', _print_bin},
-		('u', print_unsig),
-		{'X', print_hexaup},
-		{'x', print_hexalow},
+		{'S', _printstring},
 		{'\0', NULL}
 	};
 
