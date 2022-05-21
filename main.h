@@ -25,5 +25,7 @@ int print_string(va_list s);
 int (*cmp_func(const char a))(va_list);
 int print_n(va_list n);
 int _print_bin(va_list args);
-
+int print_unsig(unsigned int n);
+int print_hexaup(unsigned int n);
+int print_hexalow(unsigned int n);
 #endif /* main_h */
